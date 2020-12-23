@@ -825,7 +825,7 @@ void VL53L1X::getROICenter(uint16_t *ROI_Center)
 }
 
 // https://github.com/pololu/vl53l1x-arduino/issues/5
-void VL53L1X::SetROI(uint8_t X, uint8_t Y)
+void VL53L1X::setROI(uint8_t X, uint8_t Y)
 {
     uint8_t OpticalCenter;
     OpticalCenter = readReg(ROI_CONFIG__USER_ROI_CENTRE_SPAD);
