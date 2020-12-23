@@ -806,3 +806,46 @@ uint32_t VL53L1X::calcMacroPeriod(uint8_t vcsel_period)
 
   return macro_period_us;
 }
+
+// from https://github.com/pololu/vl53l1x-arduino/issues/5
+void VL53L1X::getROIxy(uint16_t *ROI_X, uint16_t *ROI_Y)
+{
+    uint8_t roi;
+    roi = readReg(ROI_CONFIG__USER_ROI_REQUESTED_GLOBAL_XY_SIZE);
+    *ROI_X = ((uint16_t)roi & 0x0F) + 1;
+    *ROI_Y = (((uint16_t)roi & 0xF0) >> 4) + 1;
+}
+
+// from https://github.com/pololu/vl53l1x-arduino/issues/5
+void VL53L1X::getROICenter(uint16_t *ROI_Center)
+{
+    uint8_t center;
+    center = readReg(ROI_CONFIG__USER_ROI_CENTRE_SPAD);
+    *ROI_Center = center;
+}
+
+// https://github.com/pololu/vl53l1x-arduino/issues/5
+void VL53L1X::SetROI(uint8_t X, uint8_t Y)
+{
+    uint8_t OpticalCenter;
+    OpticalCenter = readReg(ROI_CONFIG__USER_ROI_CENTRE_SPAD);
+    
+    if (X > 16) 
+    {
+        X = 16;
+    }
+    
+    if (Y > 16)
+    {
+        Y = 16;
+    }
+
+    if (X > 10 || Y > 10)
+    {
+        OpticalCenter = 199;
+    }
+	
+    writeReg(ROI_CONFIG__USER_ROI_CENTRE_SPAD, OpticalCenter);
+    writeReg(ROI_CONFIG__USER_ROI_REQUESTED_GLOBAL_XY_SIZE, (Y - 1) << 4 | (X - 1));
+}
+
