@@ -1299,6 +1299,9 @@ class VL53L1X
     uint16_t readRangeContinuousMillimeters(bool blocking = true) { return read(blocking); } // alias of read()
     uint16_t readSingle(bool blocking = true);
     uint16_t readRangeSingleMillimeters(bool blocking = true) { return readSingle(blocking); } // alias of readSingle()
+    void VL53L1X::getROIxy(uint16_t *ROI_X, uint16_t *ROI_Y);
+    void VL53L1X::getROICenter(uint16_t *ROI_Center);
+    void VL53L1X::setROI(uint8_t X, uint8_t Y);
 
     // check if sensor has new reading available
     // assumes interrupt is active low (GPIO_HV_MUX__CTRL bit 4 is 1)
