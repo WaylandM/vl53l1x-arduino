@@ -3,11 +3,11 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-class VL53L1X
+class VL53L1XMTW
 {
   public:
 
-    // register addresses from API vl53l1x_register_map.h
+    // register addresses from API VL53L1X_register_map.h
     enum regAddr : uint16_t
     {
       SOFT_RESET                                                                 = 0x0000,
@@ -1270,7 +1270,7 @@ class VL53L1X
 
     uint8_t last_status; // status of last I2C transmission
 
-    VL53L1X();
+    VL53L1XMTW();
 
     void setBus(TwoWire * bus) { this->bus = bus; }
     TwoWire * getBus() { return bus; }
@@ -1299,9 +1299,9 @@ class VL53L1X
     uint16_t readRangeContinuousMillimeters(bool blocking = true) { return read(blocking); } // alias of read()
     uint16_t readSingle(bool blocking = true);
     uint16_t readRangeSingleMillimeters(bool blocking = true) { return readSingle(blocking); } // alias of readSingle()
-    void VL53L1X::getROIxy(uint16_t *ROI_X, uint16_t *ROI_Y);
-    void VL53L1X::getROICenter(uint16_t *ROI_Center);
-    void VL53L1X::setROI(uint8_t X, uint8_t Y);
+    void getROIxy(uint16_t *ROI_X, uint16_t *ROI_Y);
+    void getROICenter(uint16_t *ROI_Center);
+    void setROI(uint8_t X, uint8_t Y);
 
     // check if sensor has new reading available
     // assumes interrupt is active low (GPIO_HV_MUX__CTRL bit 4 is 1)
